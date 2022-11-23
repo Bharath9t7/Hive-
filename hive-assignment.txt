@@ -113,7 +113,22 @@ USA	3627982.825744629
 
 ---------------------------------
 6. Calculate quartelry sales for each city
-
+select city, qtr_id, sum(sales) from sales_order_orc group by city, qtr_id;
 
 ---------------------------------
 7. Find a month for each year in which maximum number of quantities were sold
+
+select year_id, month_id, total_sales from
+(
+    select year_id, month_id, sum(sales) as total_sales,
+           dense_rank() over(partition by year_id order by sum(sales) desc) as dr
+      from sales_order_orc
+      group by year_id, month_id
+) subquery
+where dr = 1;
+
+output -
+year_id	month_id	total_sales
+2003	11	1029837.6627197266
+2004	11	1089048.0076293945
+2005	5	457861.06036376953
