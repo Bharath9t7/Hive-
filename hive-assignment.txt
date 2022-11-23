@@ -63,3 +63,20 @@ create table sales_order_orc (
 #Load data from "sales_order_csv" into "sales_order_orc"
 from sales_order_csv insert overwrite table sales_order_orc select *;
 
+--------------------------------
+1. calculate total sales per year
+select year_id, sum(sales) as total_sales from sales_order_orc group by year_id;
+
+output - 
+year_id	total_sales
+2003	3516979.547241211
+2004	4724162.593383789
+2005	1791486.7086791992
+
+---------------------------------
+2. Find a product for which maximum orders were placed
+select productline, count(ordernumber) as total_orders from sales_order_orc group by productline order by total_orders desc limit 1;
+
+output - 
+productline	total_orders
+Classic Cars	967
