@@ -112,7 +112,7 @@ Ireland	57756.43029785156
 USA	3627982.825744629
 
 ---------------------------------
-6. Calculate quartelry sales for each city
+6. Calculate quarterly sales for each city
 select city, qtr_id, sum(sales) from sales_order_orc group by city, qtr_id;
 
 ---------------------------------
