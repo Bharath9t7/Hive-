@@ -75,8 +75,45 @@ year_id	total_sales
 
 ---------------------------------
 2. Find a product for which maximum orders were placed
-select productline, count(ordernumber) as total_orders from sales_order_orc group by productline order by total_orders desc limit 1;
+select productline, count(distinct ordernumber) as total_orders from sales_order_orc group by productline order by total_orders desc limit 1;
 
 output - 
 productline	total_orders
-Classic Cars	967
+Classic Cars	199
+
+---------------------------------
+3. Calculate the total sales for each quarter
+select qtr_id, sum(sales) as total_sales from sales_order_orc group by qtr_id;
+
+o/p - 
+qtr_id	total_sales
+1	2350817.726501465
+2	2048120.3029174805
+3	1758910.808959961
+4	3874780.010925293
+
+---------------------------------
+4. In which quarter sales was minimum
+select qtr_id, sum(sales) as total_sales from sales_order_orc group by qtr_id order by total_sales limit 1;
+
+o/p - 
+qtr_id	total_sales
+3	1758910.808959961
+
+----------------------------------
+5. In which country sales was maximum and in which country sales was minimum
+select country, sum(sales) as total_sales from sales_order_orc group by country order by total_sales desc limit 1
+union all
+select country, sum(sales) as total_sales from sales_order_orc group by country order by total_sales limit 1;
+
+output - 
+_u1.country	_u1.total_sales
+Ireland	57756.43029785156
+USA	3627982.825744629
+
+---------------------------------
+6. Calculate quartelry sales for each city
+
+
+---------------------------------
+7. Find a month for each year in which maximum number of quantities were sold
